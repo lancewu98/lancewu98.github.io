@@ -44,7 +44,7 @@
     <link href="https://lancewu98.github.io/2020/08/22/demo/"/>
     <id>https://lancewu98.github.io/2020/08/22/demo/</id>
     <published>2020-08-22T03:41:53.000Z</published>
-    <updated>2020-08-29T12:14:52.020Z</updated>
+    <updated>2020-08-29T12:21:47.191Z</updated>
     
     <content type="html"><![CDATA[<p>##第一章</p><p>内容</p><hr><p>##第二章</p><p>内容</p><hr><p>##参考文献</p><p><a href="http://www.baidu.com/">www.baidu.com</a></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
     
