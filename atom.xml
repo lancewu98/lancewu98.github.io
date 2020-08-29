@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Lance&#39;s blog</title>
+  
+  <subtitle>just for fun</subtitle>
+  <link href="https://lancewu98.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://lancewu98.github.io/"/>
+  <updated>2020-08-29T12:09:06.164Z</updated>
+  <id>https://lancewu98.github.io/</id>
+  
+  <author>
+    <name>LanceWu</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hexo搭建步骤及踩到的坑</title>
+    <link href="https://lancewu98.github.io/2020/08/22/hexo-da-jian-bu-zou-ji-cai-dao-de-keng/"/>
+    <id>https://lancewu98.github.io/2020/08/22/hexo-da-jian-bu-zou-ji-cai-dao-de-keng/</id>
+    <published>2020-08-22T04:51:43.000Z</published>
+    <updated>2020-08-29T12:09:06.164Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="hexo安装步骤"><a href="#hexo安装步骤" class="headerlink" title="hexo安装步骤"></a>hexo安装步骤</h2><p>1.安装nodejs</p><p>坑：尽量别装太新的版本，不然启动hexo会出错，像v10.15.0的就可以了，这个直接百度“nodejs以往版本”就行</p><p>环境变量：win10不赘述，linux需要编辑/etc/profile文件加入环境变量，然后sudo su进入管理员模式，再 source /etc/profile使得环境变量生效（每次打开终端都需要这样，暂无解决办法）</p><p>配置完环境变量后，cmd输入 node -v和 npm -v有显示版本号即安装成功</p><p>2.配置阿里镜像</p><p>cmd执行 npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a> (registry前面是两条杠，不知道为啥编辑器里是两道杠，在博客里变成了一条)</p><p>完成之后输入 cnpm -v，有版本信息即可，registry有taobao即配置阿里镜像成功</p><p>3.安装hexo</p><p>cmd执行 cnpm install -g hexo-cli</p><p>完成之后输入hexo -v，有版本信息即可</p><hr><h2 id="hexo博客具体使用"><a href="#hexo博客具体使用" class="headerlink" title="hexo博客具体使用"></a>hexo博客具体使用</h2><p>1.随便建立一个文件夹放置博客文件</p><p>2.进入文件夹，cmd执行 hexo init<br>此处win10直接执行，linux要加sudo，执行完成即创建了一个初始的hexo博客</p><p>3.启动hexo博客</p><p>cmd执行 hexo s（默认是localhost：4000，端口有误自行百度）s代表start或server吧大概</p><p>4.建立一篇新文章</p><p>先在cmd里ctrl+c退出运行中的博客，执行 hexo n “文章名”即可</p><p>5.修改文章</p><p>在source/_posts/目录下有刚产生的文章，直接编辑即可</p><p>6.将文章生成到博客</p><p>执行cd ../..返回初始目录，执行 hexo clean，再执行 hexo g即可（clean其实可以不执行的）</p><p>7.再次打开博客即可看到新文章</p><p>执行 hexo s</p><hr><h2 id="hexo博客部署到github"><a href="#hexo博客部署到github" class="headerlink" title="hexo博客部署到github"></a>hexo博客部署到github</h2><p>1.安装git并且配置git账号信息</p><p>  安装不赘述，记得安装要选git bash且记得配置环境变量</p><p>  git config –global user.name “你的github用户名”<br>  git config –global user.email “你的github账号注册的邮箱”</p><p>  完成后可以执行 git config –list查看是否设置成功</p><p>2.在github建立一个github page的仓库</p><p>  和创建普通仓库步骤差不多，只是仓库名必须是“你的github账号用户名（非昵称）.github.io”</p><p>3.安装部署插件</p><p>  cmd执行 cnpm install –save hexo-deployer-git</p><p>4.设置部署配置</p><p>  打开博客目录下的_config.yml文件，拉到最底下deploy处,如下填写（冒号后面必须有空格）：</p><p>  deploy:<br>     type: git<br>     repo: 你上面创建的仓库的地址 (https和ssh都可以)<br>     branch: master</p><p>5.部署到远端</p><p>  cmd执行 hexo d，期间需要输入github的账号和密码，完成之后github仓库里会出现博客生成的内容</p><p>6.浏览器访问</p><p>  <a href="https://xxx.github.io/">https://xxx.github.io</a></p><p>  此处遇到了最大的一个坑，且折腾了非常久，坑是浏览时会显示禁止访问，没有授权<br>  解决过程：<br>  最开始尝试的方法是本机生成ssh key并在github里添加，但是还是不行（暂不确定会不会只是解决问题的其中一步）<br>  最后是找了挺久才找到正确的方法：</p><p>  1.打开 <a href="http://tool.chinaz.com/dns%EF%BC%8C%E8%BE%93%E5%85%A5%E2%80%9Cxxx.github.io%E2%80%9D%E4%BB%A5%E6%9F%A5%E8%AF%A2%E5%8D%9A%E5%AE%A2ip%E5%9C%B0%E5%9D%80">http://tool.chinaz.com/dns，输入“xxx.github.io”以查询博客ip地址</a></p><p>  2.记下第一条字样 “[美国 Github+Fastly节点]”前的ip地址</p><p>  3.用记事本打开C:\Windows\System32\drivers\etc里的hosts文件，注意需要管理员权限，不然无法保存修改（不知道为什么我的win10右键没有管理员运行这一项，所以我的操作是直接复制hosts里面的内容，然后删除，创建个同名txt再将原内容复制进去）</p><p>  4.在文件最后加上“刚才查询到的ip地址 xxx.github.io”</p><p>  5.cmd执行 ipconfig /flushdns即可</p><hr><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>这个过程确实不麻烦，主要是之前试过的几次，都是在最后一步的坑里跌住，执行xxx.github.io时总是404，添加了https都不管用，之后这次变成了没有授权。。反正一路吃s，最后才弄完的，之后再考虑弄到gitee上，毕竟比较快。<br>博客主题参考：<a href="https://github.com/blinkfox/hexo-theme-matery/blob/develop/README_CN.md">https://github.com/blinkfox/hexo-theme-matery/blob/develop/README_CN.md</a></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;hexo安装步骤&quot;&gt;&lt;a href=&quot;#hexo安装步骤&quot; class=&quot;headerlink&quot; title=&quot;hexo安装步骤&quot;&gt;&lt;/a&gt;hexo安装步骤&lt;/h2&gt;&lt;p&gt;1.安装nodejs&lt;/p&gt;
+&lt;p&gt;坑：尽量别装太新的版本，不然启动hexo会出错，像v10</summary>
+      
+    
+    
+    
+    
+    <category term="hexo" scheme="https://lancewu98.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>demo</title>
+    <link href="https://lancewu98.github.io/2020/08/22/demo/"/>
+    <id>https://lancewu98.github.io/2020/08/22/demo/</id>
+    <published>2020-08-22T03:41:53.000Z</published>
+    <updated>2020-08-29T12:14:52.020Z</updated>
+    
+    <content type="html"><![CDATA[<p>##第一章</p><p>内容</p><hr><p>##第二章</p><p>内容</p><hr><p>##参考文献</p><p><a href="http://www.baidu.com/">www.baidu.com</a></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;##第一章&lt;/p&gt;
+&lt;p&gt;内容&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;##第二章&lt;/p&gt;
+&lt;p&gt;内容&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;##参考文献&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.baidu.com/&quot;&gt;www.baidu.com&lt;/a&gt;&lt;/p&gt;
+&lt;script&gt;
+    </summary>
+      
+    
+    
+    
+    <category term="Markdown" scheme="https://lancewu98.github.io/categories/Markdown/"/>
+    
+    
+    <category term="Typora" scheme="https://lancewu98.github.io/tags/Typora/"/>
+    
+    <category term="Markdown" scheme="https://lancewu98.github.io/tags/Markdown/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="https://lancewu98.github.io/2020/08/22/hello-world/"/>
+    <id>https://lancewu98.github.io/2020/08/22/hello-world/</id>
+    <published>2020-08-22T03:36:01.976Z</published>
+    <updated>2020-08-22T03:36:01.976Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+</feed>
