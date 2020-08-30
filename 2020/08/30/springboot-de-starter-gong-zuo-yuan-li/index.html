@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="demo, Lance&#39;s blog">
+    <meta name="keywords" content="SpringBoot的Starter工作原理, Lance&#39;s blog">
     <meta name="description" content="The memo of the demo">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>demo | Lance&#39;s blog</title>
+    <title>SpringBoot的Starter工作原理 | Lance&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -322,12 +322,12 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/33.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">demo</h1>
+                    <h1 class="description center-align post-title">SpringBoot的Starter工作原理</h1>
                 </div>
             </div>
         </div>
@@ -442,9 +442,13 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/java/">
+                                <span class="chip bg-color">java</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -456,7 +460,7 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-08-22
+                    2020-08-30
                 </div>
                 
 
@@ -465,7 +469,7 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    69
+                    1.4k
                 </div>
                 
 
@@ -477,14 +481,35 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>##第一章</p>
-<p>内容</p>
-<hr>
-<p>##第二章</p>
-<p>内容</p>
-<hr>
-<p>##参考文献</p>
-<p><a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
+                <h2 id="生产资料，优先到位"><a href="#生产资料，优先到位" class="headerlink" title="生产资料，优先到位"></a>生产资料，优先到位</h2><p>生产资料就是用于正常生产工作所需要的一切东西。<br>从古代战争来讲，那就是“兵马未动，粮草先行”。所以粮草就是生产资料。<br>从我们码农来讲，正常开发所需要的都是生产资料，这里有一块很重要的资料，就是所有依赖的第三方jar包。<br>我们不需要重复造轮子，也不需要从零开始，所以直接拿来就用，拿来的其实就是jar包。<br>jar包只是一些基础代码，而且很多原本和Spring或SpringBoot没有关系，现在要和Spring或SpringBoot整合使用，就必须按Spring或SpringBoot的Style进行。</p>
+<h2 id="传统的和Spring整合的方式"><a href="#传统的和Spring整合的方式" class="headerlink" title="传统的和Spring整合的方式"></a>传统的和Spring整合的方式</h2><p>还以MyBatis和Spring整合为例，因为每个Java开发人员对它都非常熟悉。<br>要完成这个整合，需要三个方面的jar包：<br>一是Spring的jar包。<br>二是MyBatis的jar包。<br>三是整合时使用的jar包。<br>这三方面的jar包都需要自己手动一一引入。<br>引入Spring的jar包：</p>
+<p><img src="https://i.loli.net/2020/08/30/CjyuOmdUPEZFVAt.jpg" alt="1.jpg"></p>
+<p>引入MyBatis的jar包：</p>
+<p><img src="https://i.loli.net/2020/08/30/WfHw7CXJYagGMOU.jpg" alt="2.jpg"></p>
+<p>引入整合的jar包：</p>
+<p><img src="https://i.loli.net/2020/08/30/LOwPBKrpUtfQEd1.jpg" alt="3.jpg"></p>
+<p>还有一个问题，就是当引入的jar包足够多时，jar包之间的版本号有时会有冲突，需要自己慢慢测试，颇为麻烦。<br>jar包导入之后，就该自己写代码进行Bean注册了，因为Spring的Style就是Bean注册。</p>
+<p><img src="https://i.loli.net/2020/08/30/ZnrGz1BTqI5oapX.jpg" alt="4.jpg"></p>
+<p>主要包括四方面内容：<br>1、注册SqlSessionFactory这个Bean<br>2、指定mybatis的mybatis-config.xml配置文件路径<br>3、指定mybatis的mapper.xml映射文件的路径<br>4、指定源码包路径并扫描所有@Mapper注解接口</p>
+<p>这里面有两个问题，不是十分友好：<br>1、jar包版本号问题，有时确实麻烦<br>2、注册Bean的代码几乎都一样，而且每次都要手动注册</p>
+<h2 id="SpringBoot帮你解决"><a href="#SpringBoot帮你解决" class="headerlink" title="SpringBoot帮你解决"></a>SpringBoot帮你解决</h2><p>对于jar包的版本号问题，SpringBoot帮你搞定，它经过测试，把常用的依赖及其适合的版本号都通过依赖管理的方式包含在pom文件中。</p>
+<p><img src="https://i.loli.net/2020/08/30/oLGInit19PO6ZUE.jpg" alt="5.jpg"></p>
+<p>注意，这里只是依赖管理，并不是引入依赖。如需使用的话，还需要引入，只不过不用再指定版本号了。<br>对于注册Bean的问题，SpringBoot也帮你搞定，它把这些注册代码都已写好，然后通过各种“条件注解”来进行自动配置，所以最终会不会被注册，还要看运行时的“条件”。<br>这其实就是SpringBoot的自动配置了，具体可参考前两篇文章。</p>
+<h2 id="Starter就是一个启用入口"><a href="#Starter就是一个启用入口" class="headerlink" title="Starter就是一个启用入口"></a>Starter就是一个启用入口</h2><p>汽车造好之后，就只给我们留了一个一键启动的按键，踩着刹车按一下就启动了，至于按键背后做的事情，我们无需知道，只有这样才可以大范围推广。<br>同理，Starter也是这样一个东西，只要引入之后，并在application.yml文件中进行一些简单的配置或根本无须配置，直接启动后就可以用了。<br>Starter其实就是一个jar包，在pom中引入一个starter其实就是引入了一个jar包。<br>而且很多时候，这个starter对应的jar包是个空的，里面并没有任何类和接口。</p>
+<p><img src="https://i.loli.net/2020/08/30/BtwIaRNr6g4JWbZ.png" alt="6.png"></p>
+<p>那这个空的jar包有何意义呢？它的意义就在于为了引入有意义的其它jar包，因为这些jar包都是基于Maven的，因此jar包的pom文件中包含了其它依赖。</p>
+<p><img src="https://i.loli.net/2020/08/30/q3V1x8QrbPWySAz.png" alt="7.png"></p>
+<p>我们可以看到这个MyBatis的Starter就引入了正好需要的四类jar包：<br>1、Spring或SpringBoot相关的jar包<br>2、MyBatis的jar包<br>3、MyBatis和Spring整合的jar包<br>4、自动配置（也就是自动注册Bean）的jar包</p>
+<p>这样一来，要完成MyBatis和Spring整合的所有jar包都凑齐了。而且自动注册Bean这些模板代码也已经有了。<br>这里面也就自动配置jar包稍微特殊一点，它里面包含一些带有“条件注解”的Bean注册。所以这些代码需要在SpringBoot中运行。<br>由于很多自动配置jar包都是第三方提供的，所以一定要告诉SpringBoot一声，让SpringBoot来执行它，这样才可以。<br>就像一键启动按钮一样，你至少要按一下吧，不能通过意念控制的。</p>
+<p>下面是MyBatis的自动配置jar包：</p>
+<p><img src="https://i.loli.net/2020/08/30/3COU6bvqelZI7x9.png" alt="8.png"></p>
+<p>这个jar包里包含了一个特殊约定的文件，就是spring.factories，它位于jar包里的META-INF目录下：</p>
+<p><img src="https://i.loli.net/2020/08/30/wzM6ja8cOYlukoJ.png" alt="9.png"></p>
+<p>这个文件的内容如下：</p>
+<p><img src="https://i.loli.net/2020/08/30/a1nlQY9SHokjVfX.png" alt="10.png"></p>
+<p>首先注释已经告诉我们了，这是自动配置。<br>具体内容是一个key/value类型的内容，key是固定的，就是SpringBoot自动配置的注解EnableAutoConfiguration的全名。<br>value就是第三方提供的自动配置类MybatisAutoConfiguration的全名。<br>这其实就是一个挂接，通过这种方式，第三方提供的自动配置就可以被SpringBoot执行了，然后Bean就会被注册了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Starter使用Maven规则引入所有需要的依赖jar包，和自动配置jar包。<br>自动配置jar包使用spring.factories文件把自己挂接到SpringBoot以便被执行。<br>带来的简便：<br>原来所有的问题，现在都变为仅仅在pom中引入一个starter而已。</p>
+<h2 id="转载"><a href="#转载" class="headerlink" title="转载"></a>转载</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&amp;mid=2247491274&amp;idx=2&amp;sn=73f2c1f52794b082bfc63737b0d98f5e&amp;chksm=ebd75fcbdca0d6ddf39898a772661c7f28640bfe78f2f7925ed52961619f1a2fdc48180f5908&amp;mpshare=1&amp;scene=24&amp;srcid=0807E1nR0LMmcSova0BWC2CD&amp;sharer_sharetime=1596774789117&amp;sharer_shareid=8f0021d867157be678db15b35b9a963d&amp;key=d346675dd6ecd6cc58e12f8bb9f89e1c5d0636ae83160b77a957a24bf3569baa54806841683d66dbca93b9421832070a682f7e2a9825aec7a854c2c95a8671a1b9f1c1954f7c84051e8e48de449ec28305df080865e04b7924b293fd5a73afa1b6f9f2ac3735097c34ec6642a1cc8525336489e79ffaec7079476613a191be72&amp;ascene=14&amp;uin=MTk5MzI1NjEyOA==&amp;devicetype=Windows+10+x64&amp;version=62090538&amp;lang=zh_CN&amp;exportkey=A3BlpTpxh/PJDBneV/VJ0mg=&amp;pass_ticket=e83yzQu/ia6BTOdDQpH02zY4l0aLYoUOi5QbD2jucebyEmTDempCnWseQkzpe2Ht">https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&amp;mid=2247491274&amp;idx=2&amp;sn=73f2c1f52794b082bfc63737b0d98f5e&amp;chksm=ebd75fcbdca0d6ddf39898a772661c7f28640bfe78f2f7925ed52961619f1a2fdc48180f5908&amp;mpshare=1&amp;scene=24&amp;srcid=0807E1nR0LMmcSova0BWC2CD&amp;sharer_sharetime=1596774789117&amp;sharer_shareid=8f0021d867157be678db15b35b9a963d&amp;key=d346675dd6ecd6cc58e12f8bb9f89e1c5d0636ae83160b77a957a24bf3569baa54806841683d66dbca93b9421832070a682f7e2a9825aec7a854c2c95a8671a1b9f1c1954f7c84051e8e48de449ec28305df080865e04b7924b293fd5a73afa1b6f9f2ac3735097c34ec6642a1cc8525336489e79ffaec7079476613a191be72&amp;ascene=14&amp;uin=MTk5MzI1NjEyOA%3D%3D&amp;devicetype=Windows+10+x64&amp;version=62090538&amp;lang=zh_CN&amp;exportkey=A3BlpTpxh%2FPJDBneV%2FVJ0mg%3D&amp;pass_ticket=e83yzQu%2Fia6BTOdDQpH02zY4l0aLYoUOi5QbD2jucebyEmTDempCnWseQkzpe2Ht</a></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -528,7 +553,7 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://lancewu98.github.io/2020/08/22/demo/">https://lancewu98.github.io/2020/08/22/demo/</a>
+                    <a href="https://lancewu98.github.io/2020/08/30/springboot-de-starter-gong-zuo-yuan-li/">https://lancewu98.github.io/2020/08/30/springboot-de-starter-gong-zuo-yuan-li/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -565,7 +590,11 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/java/">
+                                    <span class="chip bg-color">java</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -735,6 +764,52 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
+                <a href="/2020/08/30/markdown-yu-fa/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="markdown语法">
+                        
+                        <span class="card-title">markdown语法</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            以下内容参考菜鸟教程
+Markdown简介Markdown 是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档。Markdown 语言在 2004 由约翰·格鲁伯（英语：John Gruber）创建。Markdown 编写的文
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-30
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            LanceWu
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/markdown/">
+                        <span class="chip bg-color">markdown</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
                 <a href="/2020/08/22/hexo-da-jian-bu-zou-ji-cai-dao-de-keng/">
                     <div class="card-image">
                         
@@ -753,9 +828,9 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -771,43 +846,6 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                         <span class="chip bg-color">hexo</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/08/22/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-22
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            LanceWu
-                            
-                        </span>
-                    </div>
                 </div>
                 
             </div>
