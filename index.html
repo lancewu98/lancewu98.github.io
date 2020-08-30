@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="/css/my.css">
 
     <script src="/libs/jquery/jquery.min.js"></script>
+    
 
 <meta name="generator" content="Hexo 5.1.0"><link rel="alternate" href="/atom.xml" title="Lance's blog" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
@@ -397,8 +398,8 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
 
 
 <script>
-    // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
+    // 随机切换 banner 图.  Switch banner image random.
+    var bannerUrl = "/medias/banner/" + Math.floor(Math.random()*7) + '.jpg';
     $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
 </script>
 
@@ -485,7 +486,7 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
         let autoCarousel = function () {
             carouselIntervalId = setInterval(function () {
                 coverSlider.carousel('next');
-            }, 5000);
+            }, 1000);
         };
         autoCarousel();
         
