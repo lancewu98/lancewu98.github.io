@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, Wu&#39;s blog">
+    <meta name="keywords" content="SpringBoot 自动装配原理, Wu&#39;s blog">
     <meta name="description" content="The memo of the demo">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | Wu&#39;s blog</title>
+    <title>SpringBoot 自动装配原理 | Wu&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -322,12 +322,12 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">SpringBoot 自动装配原理</h1>
                 </div>
             </div>
         </div>
@@ -442,9 +442,13 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/SpringBoot/">
+                                <span class="chip bg-color">SpringBoot</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -456,7 +460,7 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-08-22
+                    2021-07-28
                 </div>
                 
 
@@ -465,7 +469,7 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    125
+                    895
                 </div>
                 
 
@@ -477,15 +481,69 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+                <h1 id="SpringBoot-自动装配原理"><a href="#SpringBoot-自动装配原理" class="headerlink" title="SpringBoot 自动装配原理"></a>SpringBoot 自动装配原理</h1><p>主程序：</p>
+<pre class=" language-SpringbootStudyApplication.java"><code class="language-SpringbootStudyApplication.java">@SpringBootApplication
+public class SpringbootStudyApplication &#123;
+
+    public static void main(String[] args) &#123;
+        SpringApplication.run(SpringbootStudyApplication.class, args);
+    &#125;
+
+&#125;</code></pre>
+<p>点进@SpringBootApplication：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTSxeg"><img src="https://z3.ax1x.com/2021/07/28/WTSxeg.md.png" alt="WTSxeg.md.png"></a></p>
+<p>@ComponentScan的作用是扫描当前主启动类同级的包</p>
+<p>需要关注的注解：</p>
+<pre><code>@SpringBootConfiguration
+@EnableAutoConfiguration</code></pre>
+<h2 id="SpringBootConfiguration"><a href="#SpringBootConfiguration" class="headerlink" title="@SpringBootConfiguration"></a>@SpringBootConfiguration</h2><p>从名字来看可以看出来是一个springboot的配置注解，点进去可以看到详情：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTpY0e"><img src="https://z3.ax1x.com/2021/07/28/WTpY0e.png" alt="WTpY0e.png"></a></p>
+<p>注意到这里面存在一个@Configuration，说明这个启动类就是一个spring配置类，继续点进去：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTCXy6"><img src="https://z3.ax1x.com/2021/07/28/WTCXy6.png" alt="WTCXy6.png"></a></p>
+<p>可以看到@Component，说明这是一个Spring的组件。</p>
+<h2 id="EnableAutoConfiguration"><a href="#EnableAutoConfiguration" class="headerlink" title="@EnableAutoConfiguration"></a>@EnableAutoConfiguration</h2><p>顾名思义，自动配置。点进去：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTPHHS"><img src="https://z3.ax1x.com/2021/07/28/WTPHHS.png" alt="WTPHHS.png"></a></p>
+<h3 id="AutoConfigurationPackage"><a href="#AutoConfigurationPackage" class="headerlink" title="@AutoConfigurationPackage"></a>@AutoConfigurationPackage</h3><p>注解@AutoConfigurationPackage的作用是自动配置包，点进去：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTPqAg"><img src="https://z3.ax1x.com/2021/07/28/WTPqAg.png" alt="WTPqAg.png"></a></p>
+<p>@Import(AutoConfigurationPackages.Registrar.class) ：自动注册包</p>
+<h3 id="Import-AutoConfigurationImportSelector-class"><a href="#Import-AutoConfigurationImportSelector-class" class="headerlink" title="@Import(AutoConfigurationImportSelector.class)"></a>@Import(AutoConfigurationImportSelector.class)</h3><p>@Import(AutoConfigurationImportSelector.class)：自动配置导入选择，这个是自动导入包的核心，点进AutoConfigurationImportSelector：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTAab6"><img src="https://z3.ax1x.com/2021/07/28/WTAab6.png" alt="WTAab6.png"></a></p>
+<p>这里面有一个selectImports方法来选择导入的内容，重点关注这个getAutoConfigurationEntry方法：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTAUDx"><img src="https://z3.ax1x.com/2021/07/28/WTAUDx.png" alt="WTAUDx.png"></a></p>
+<p>这个方法里面重点关注这一句，用于获取候选的配置：</p>
+<pre class=" language-java"><code class="language-java">List<span class="token operator">&lt;</span>String<span class="token operator">></span> configurations <span class="token operator">=</span> <span class="token function">getCandidateConfigurations</span><span class="token punctuation">(</span>annotationMetadata<span class="token punctuation">,</span> attributes<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h4 id="getCandidateConfigurations"><a href="#getCandidateConfigurations" class="headerlink" title="getCandidateConfigurations"></a>getCandidateConfigurations</h4><p>查看一下getCandidateConfigurations方法的详情：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTEDe0"><img src="https://z3.ax1x.com/2021/07/28/WTEDe0.md.png" alt="WTEDe0.md.png"></a></p>
+<p>这里面有个获取标注了EnableAutoConfiguration类的所有配置的方法，而@EnableAutoConfiguration这个注解刚好被@SpringBootApplication继承，这个作用是为了保证启动类下的所有资源被导入</p>
+<p>getCandidateConfigurations方法里面同时存在了一个Assert断言：</p>
+<pre class=" language-java"><code class="language-java">Assert<span class="token punctuation">.</span><span class="token function">notEmpty</span><span class="token punctuation">(</span>configurations<span class="token punctuation">,</span> <span class="token string">"No auto configuration classes found in META-INF/spring.factories. If you "</span>
+                <span class="token operator">+</span> <span class="token string">"are using a custom packaging, make sure that file is correct."</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>这句话指向了一个文件：</p>
+<pre><code>META-INF/spring.factories</code></pre>
+<p>这个是自动配置的核心文件。</p>
+<h5 id="META-INF-spring-factories"><a href="#META-INF-spring-factories" class="headerlink" title="META-INF/spring.factories"></a>META-INF/spring.factories</h5><p>在外部库的spring-boot-autoconfigure-2.5.3.jar包里可以找到这个文件：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTeHYT"><img src="https://z3.ax1x.com/2021/07/28/WTeHYT.png" alt="WTeHYT.png"></a></p>
+<p>文件的内容如下，这里面有很多形如XXXAutoConfiguration的文件：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTebfU"><img src="https://z3.ax1x.com/2021/07/28/WTebfU.png" alt="WTebfU.png"></a></p>
+<p>可以看到存在一个 ”# Auto Configure“的标记，这下面的内容都是自动配置的东西</p>
+<p>，如果内容不在这里面就得手动配置。虽然这里有很多配置类进行自动配置，但是是需要满足各个配置类上的所有@ConditionalOnXXX的条件，才会真正地配置（在表现中就是导入对应的starter），否则不会自动配置。</p>
+<p>随便点开一个看一下：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTm5ge"><img src="https://z3.ax1x.com/2021/07/28/WTm5ge.png" alt="WTm5ge.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTmIjH"><img src="https://z3.ax1x.com/2021/07/28/WTmIjH.png" alt="WTmIjH.png"></a></p>
+<p>存在多个ConditionalOn的注解，这些注解的作用是：满足指定条件的时候才将某个 bean 加载到应用上下文中。</p>
+<p>从@Configuration注解可以看出这也是一个Spring的配置类组件，这里面有一个内部类导入了WebMvcProperties：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTnzi6"><img src="https://z3.ax1x.com/2021/07/28/WTnzi6.png" alt="WTnzi6.png"></a></p>
+<p>点进WebMvcProperties可以看到里面创建了Servlet和View：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTnjd1"><img src="https://z3.ax1x.com/2021/07/28/WTnjd1.png" alt="WTnjd1.png"></a></p>
+<h5 id="loadFactoryNames"><a href="#loadFactoryNames" class="headerlink" title="loadFactoryNames"></a>loadFactoryNames</h5><p>重新回到getCandidateConfigurations方法，点进loadFactoryNames方法，这个方法获取了所有的加载配置：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTKxgO"><img src="https://z3.ax1x.com/2021/07/28/WTKxgO.png" alt="WTKxgO.png"></a></p>
+<p>loadFactoryNames方法里面有一个loadSpringFactories方法，点进去：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTKzvD"><img src="https://z3.ax1x.com/2021/07/28/WTKzvD.png" alt="WTKzvD.png"></a></p>
+<p>loadSpringFactories方法内容如下：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTKv8K"><img src="https://z3.ax1x.com/2021/07/28/WTKv8K.png" alt="WTKv8K.png"></a></p>
+<p>从代码可以看到，这里存在一个从类加载器里获取资源作url枚举，然后遍历枚举url的操作，最后在遍历里面加载出了properties。而这个获取资源的常量FACTORIES_RESOURCE_LOCATION，其实就指向META-INF/spring.factories：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WT3eFs"><img src="https://z3.ax1x.com/2021/07/28/WT3eFs.md.png" alt="WT3eFs.md.png"></a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>自动配置实际上就是配置spring-boot-autoconfigure-2.5.3.jar包里META-INF/spring.factories内设定的一些配置类，它会把所有需要导入的组件（满足文件上所有@ConditionalOnXXX条件的XXXAutoConfiguration的文件），以类名的方式返回，这些组件就会被添加到容器。有了自动配置功能，免去了我们手动编写配置文件的工作。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -529,7 +587,7 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://lancewu98.github.io/2020/08/22/hello-world/">https://lancewu98.github.io/2020/08/22/hello-world/</a>
+                    <a href="https://lancewu98.github.io/2021/07/28/springboot-zi-dong-zhuang-pei-yuan-li/">https://lancewu98.github.io/2021/07/28/springboot-zi-dong-zhuang-pei-yuan-li/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -566,7 +624,11 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/SpringBoot/">
+                                    <span class="chip bg-color">SpringBoot</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -732,76 +794,33 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/08/22/demo/">
+                <a href="/2021/07/28/springboot-zi-dong-zhuang-pei-yuan-li/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/33.jpg" class="responsive-img" alt="demo">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="SpringBoot 自动装配原理">
                         
-                        <span class="card-title">demo</span>
+                        <span class="card-title">SpringBoot 自动装配原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ##第一章
-内容
+                            SpringBoot 自动装配原理主程序：
+@SpringBootApplication
+public class SpringbootStudyApplication &#123;
 
-##第二章
-内容
-
-##参考文献
-www.baidu.com
-
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-22
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            LanceWu
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/08/22/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
+    public static void main
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-22
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-28
                             </span>
                         <span class="publish-author">
                             
@@ -812,6 +831,59 @@ www.baidu.com
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/SpringBoot/">
+                        <span class="chip bg-color">SpringBoot</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/07/27/mybatis-pian-qi-er-jin-jie-yong-fa/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="MyBatis入门（续）">
+                        
+                        <span class="card-title">MyBatis入门（续）</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            MyBatis篇其二 ——进阶用法1.多对一映射在mybatis的实际使用情景下，每个查询实体不一定只是八大基础类型，可能存在复杂的对象类型，这个时候就不能直接按照之前的写法处理。首先看一下多对一的情况，创建一个Student类和一个Tea
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            LanceWu
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/MyBatis/">
+                        <span class="chip bg-color">MyBatis</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -1029,7 +1101,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">35.2k</span>&nbsp;字
+                class="white-color">35.9k</span>&nbsp;字
             
             
             
