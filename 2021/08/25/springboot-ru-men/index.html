@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SpringBoot 自动装配原理, Wu&#39;s blog">
+    <meta name="keywords" content="SpringBoot入门, Wu&#39;s blog">
     <meta name="description" content="The memo of the demo">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>SpringBoot 自动装配原理 | Wu&#39;s blog</title>
+    <title>SpringBoot入门 | Wu&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -322,12 +322,12 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/28.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SpringBoot 自动装配原理</h1>
+                    <h1 class="description center-align post-title">SpringBoot入门</h1>
                 </div>
             </div>
         </div>
@@ -460,7 +460,7 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-07-28
+                    2021-08-25
                 </div>
                 
 
@@ -469,7 +469,7 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    895
+                    2k
                 </div>
                 
 
@@ -481,69 +481,143 @@ color="122 103 238" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="SpringBoot-自动装配原理"><a href="#SpringBoot-自动装配原理" class="headerlink" title="SpringBoot 自动装配原理"></a>SpringBoot 自动装配原理</h1><p>主程序：</p>
-<pre class=" language-SpringbootStudyApplication.java"><code class="language-SpringbootStudyApplication.java">@SpringBootApplication
-public class SpringbootStudyApplication &#123;
+                <h1 id="SpringBoot-入门"><a href="#SpringBoot-入门" class="headerlink" title="SpringBoot 入门"></a>SpringBoot 入门</h1><h2 id="给属性赋值的方式"><a href="#给属性赋值的方式" class="headerlink" title="给属性赋值的方式"></a>给属性赋值的方式</h2><p>1.直接在属性上使用@Value(“属性值”)传值后自动注入（也可以写在setter上）</p>
+<p>这个注解有个好处就是可以使用SpEL语法，但是需要一个个绑定，且不支持封装对象</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WbNbz4"><img src="https://z3.ax1x.com/2021/07/29/WbNbz4.png" alt="WbNbz4.png"></a></p>
+<p>2.在实体类上标注@ConfigurationProperties(prefix=”配置文件内的对象名”)后自动注入</p>
+<p>这个注解的作用：将配置文件中配置的每一个属性的值，映射到这个组件中，将本类中的所有属性和配置文件中相关的配置进行绑定。注意：只有这个组件是容器中的组件，才能使用这个注解的功能</p>
+<p>这种方式支持JSR303校验，在实体类上@Validated就可以在实体类的属性上加入一些注解进行数据校验（如@Email来校验是否是邮箱格式）</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WbULh8"><img src="https://z3.ax1x.com/2021/07/29/WbULh8.png" alt="WbULh8.png"></a></p>
+<p>3.在实体类上标注@PropertySource(value = “自定义配置文件路径”)后自动注入</p>
+<p>@ConfigurationProperties注解获取的是application.yaml或pplication.properties里的内容，这两个是被spring识别的。如果是非spring识别的配置文件，就需要用@PropertySource来读取。这种方式需要配合@Value来使用。</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WbBqSK"><img src="https://z3.ax1x.com/2021/07/29/WbBqSK.png" alt="WbBqSK.png"></a></p>
+<h2 id="多环境配置及配置文件位置"><a href="#多环境配置及配置文件位置" class="headerlink" title="多环境配置及配置文件位置"></a>多环境配置及配置文件位置</h2><p>springBoot会读取以下几个路径的application.yml：</p>
+<ol>
+<li><p>当前文件的config文件夹内</p>
+</li>
+<li><p>当前文件下</p>
+</li>
+<li><p>类路径的config文件夹内</p>
+</li>
+<li><p>类路径下</p>
+</li>
+</ol>
+<p>优先级由上到下从高到低，同名配置项优先级高的会覆盖优先级低的。</p>
+<p>被Spring识别的配置文件必须以application开头，以properties，yaml，yml为后缀，如：</p>
+<p>application-dev.properties，application-test.properties..</p>
+<p>这些配置文件里面可以设置的属性，其实就是自动配置加进来的配置类设定的属性，没有设定的话就取的自动配置类里面的默认值。至于哪些自动配置类是生效的，可以在application.properties里设置debug=true来查看控制台输出。</p>
+<p>如果需要选择激活哪一套配置文件，可以使用spring.profiles.active来指定，如：</p>
+<p>spring.profiles.active=dev</p>
+<p>如果是yaml文件，可以把多套配置文件写在一起，配置文件之间用三条横杠—分开即可，然后每个配置文件内容可以用spring： profiles：XXX来命名。</p>
+<h2 id="静态资源导入"><a href="#静态资源导入" class="headerlink" title="静态资源导入"></a>静态资源导入</h2><p>通过查看WebMvcAutoConfiguration类，可以看到有一个方法：</p>
+<pre><code>@Override
+public void addResourceHandlers(ResourceHandlerRegistry registry) &amp;#123;
+    if (!this.resourceProperties.isAddMappings()) &amp;#123;
+        logger.debug("Default resource handling disabled");
+        return;
+    &amp;#125;
+    addResourceHandler(registry, "/webjars/**", "classpath:/META-INF/resources/webjars/");
+    addResourceHandler(registry, this.mvcProperties.getStaticPathPattern(), (registration) -&gt; &amp;#123;            registration.addResourceLocations(this.resourceProperties.getStaticLocations());
+    if (this.servletContext != null) &amp;#123;
+            ServletContextResource resource = new ServletContextResource(this.servletContext, SERVLET_LOCATION);
+            registration.addResourceLocations(resource);
+                &amp;#125;
+            &amp;#125;);
+        &amp;#125;</code></pre>
+<p>这里看得出来有一个webjars的目录，可以在webjars的网站上，找到jquery的maven坐标引入一下。打开引入后的依赖包：</p>
+<p><img src="https://i.loli.net/2021/07/30/RtykdBZXWNAS4Q7.png" alt="1.png"></p>
+<p>可以看到存在/META-INF/resources/webjars/的路径，和方法里的路径一致</p>
+<p>addResourceHandlers方法继续往下看，有一行：</p>
+<pre><code>registration.addResourceLocations(this.resourceProperties.getStaticLocations());</code></pre>
+<p>其中的getStaticLocations()方法，一路点进去，最后会指向几个目录：</p>
+<pre><code>private static final String[] CLASSPATH_RESOURCE_LOCATIONS = &amp;#123; "classpath:/META-INF/resources/","classpath:/resources/", "classpath:/static/", "classpath:/public/" &amp;#125;;</code></pre>
+<p>所以这四个目录下的文件都可以被扫描，识别成静态资源。其中”classpath:/META-INF/resources/“就是我们上面看到的webjars的内容。另外三个目录的创建结构如下：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/fAWPl4"><img src="https://z3.ax1x.com/2021/08/04/fAWPl4.png" alt="fAWPl4.png"></a></p>
+<p>如果都在这三个路径下创建一个同名的js文件，内容各不相同，在浏览器直接访问localhost：8080/1.js就可以比较出这三个路径的优先级，从高到低分别是：resources&gt;static（推荐）&gt;public</p>
+<p>以上是默认情况，如果在配置文件里配置了spring.mvc.static-path-pattern来指定静态资源加载路径，则默认路径下的资源不被扫描识别为静态资源，即addResourceHandlers方法的第一个if里的判断。</p>
+<p>顺带一提，classpath目录下存在一个templates目录，这里面的所有页面只能通过controller来跳转，这个需要模板引擎的支持，即需要导入thymeleaf的依赖。</p>
+<h2 id="首页"><a href="#首页" class="headerlink" title="首页"></a>首页</h2><p>WebMvcAutoConfiguration类中存在了一些关于首页的映射方法：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/fA4jvF"><img src="https://z3.ax1x.com/2021/08/04/fA4jvF.md.png" alt="fA4jvF.md.png"></a></p>
+<p>点进这个getWelcomePage()方法：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/fA46AI"><img src="https://z3.ax1x.com/2021/08/04/fA46AI.png" alt="fA46AI.png"></a></p>
+<p>如图所示，这个红框框的部分对应我们上一部分的静态资源导入里的那四个目录，由此可知，首页是通过对这四个目录下的index.html进行映射的。</p>
+<h2 id="模板引擎"><a href="#模板引擎" class="headerlink" title="模板引擎"></a>模板引擎</h2><p>引入thymeleaf相关依赖，查看一下ThymeleafProperties类：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/fAjLPe"><img src="https://z3.ax1x.com/2021/08/04/fAjLPe.png" alt="fAjLPe.png"></a></p>
+<p>可以看出thymeleaf文件默认放置路径是classpath目录的templates目录下，默认的文件后缀名是html</p>
+<p>在thymeleaf的官网可以看到一些使用例子：<a target="_blank" rel="noopener" href="https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#using-texts">https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#using-texts</a></p>
+<p>常用的语法：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/fGR6zD"><img src="https://z3.ax1x.com/2021/08/10/fGR6zD.md.png" alt="fGR6zD.md.png"></a></p>
+<p>循环取值eg：</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name"><span class="token namespace">th:</span>each</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>item : $&amp;#123;items&amp;#125;<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>text</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>$&amp;#123;item.description&amp;#125;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Item description here...<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span></code></pre>
+<h2 id="MVC配置"><a href="#MVC配置" class="headerlink" title="MVC配置"></a>MVC配置</h2><p>springboot支持使用自定义的mvc配置，只需要写一个@Configuration注解类，实现WebMvcConfigurer接口，且配置类上面不标注@EnableWebMvc注解即可，如下图是自定义一个MVC配置类，里面包含了一个自定义的视图解析器：</p>
+<pre><code>@Configuration
+public class MyMvcConfig implements WebMvcConfigurer &amp;#123;
 
-    public static void main(String[] args) &#123;
-        SpringApplication.run(SpringbootStudyApplication.class, args);
-    &#125;
+    @Bean
+    public ViewResolver myViewResolver()&amp;#123;
+        return new MyViewResolver();
+    &amp;#125;
 
-&#125;</code></pre>
-<p>点进@SpringBootApplication：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTSxeg"><img src="https://z3.ax1x.com/2021/07/28/WTSxeg.md.png" alt="WTSxeg.md.png"></a></p>
-<p>@ComponentScan的作用是扫描当前主启动类同级的包</p>
-<p>需要关注的注解：</p>
-<pre><code>@SpringBootConfiguration
-@EnableAutoConfiguration</code></pre>
-<h2 id="SpringBootConfiguration"><a href="#SpringBootConfiguration" class="headerlink" title="@SpringBootConfiguration"></a>@SpringBootConfiguration</h2><p>从名字来看可以看出来是一个springboot的配置注解，点进去可以看到详情：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTpY0e"><img src="https://z3.ax1x.com/2021/07/28/WTpY0e.png" alt="WTpY0e.png"></a></p>
-<p>注意到这里面存在一个@Configuration，说明这个启动类就是一个spring配置类，继续点进去：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTCXy6"><img src="https://z3.ax1x.com/2021/07/28/WTCXy6.png" alt="WTCXy6.png"></a></p>
-<p>可以看到@Component，说明这是一个Spring的组件。</p>
-<h2 id="EnableAutoConfiguration"><a href="#EnableAutoConfiguration" class="headerlink" title="@EnableAutoConfiguration"></a>@EnableAutoConfiguration</h2><p>顾名思义，自动配置。点进去：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTPHHS"><img src="https://z3.ax1x.com/2021/07/28/WTPHHS.png" alt="WTPHHS.png"></a></p>
-<h3 id="AutoConfigurationPackage"><a href="#AutoConfigurationPackage" class="headerlink" title="@AutoConfigurationPackage"></a>@AutoConfigurationPackage</h3><p>注解@AutoConfigurationPackage的作用是自动配置包，点进去：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTPqAg"><img src="https://z3.ax1x.com/2021/07/28/WTPqAg.png" alt="WTPqAg.png"></a></p>
-<p>@Import(AutoConfigurationPackages.Registrar.class) ：自动注册包</p>
-<h3 id="Import-AutoConfigurationImportSelector-class"><a href="#Import-AutoConfigurationImportSelector-class" class="headerlink" title="@Import(AutoConfigurationImportSelector.class)"></a>@Import(AutoConfigurationImportSelector.class)</h3><p>@Import(AutoConfigurationImportSelector.class)：自动配置导入选择，这个是自动导入包的核心，点进AutoConfigurationImportSelector：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTAab6"><img src="https://z3.ax1x.com/2021/07/28/WTAab6.png" alt="WTAab6.png"></a></p>
-<p>这里面有一个selectImports方法来选择导入的内容，重点关注这个getAutoConfigurationEntry方法：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTAUDx"><img src="https://z3.ax1x.com/2021/07/28/WTAUDx.png" alt="WTAUDx.png"></a></p>
-<p>这个方法里面重点关注这一句，用于获取候选的配置：</p>
-<pre class=" language-java"><code class="language-java">List<span class="token operator">&lt;</span>String<span class="token operator">></span> configurations <span class="token operator">=</span> <span class="token function">getCandidateConfigurations</span><span class="token punctuation">(</span>annotationMetadata<span class="token punctuation">,</span> attributes<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h4 id="getCandidateConfigurations"><a href="#getCandidateConfigurations" class="headerlink" title="getCandidateConfigurations"></a>getCandidateConfigurations</h4><p>查看一下getCandidateConfigurations方法的详情：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTEDe0"><img src="https://z3.ax1x.com/2021/07/28/WTEDe0.md.png" alt="WTEDe0.md.png"></a></p>
-<p>这里面有个获取标注了EnableAutoConfiguration类的所有配置的方法，而@EnableAutoConfiguration这个注解刚好被@SpringBootApplication继承，这个作用是为了保证启动类下的所有资源被导入</p>
-<p>getCandidateConfigurations方法里面同时存在了一个Assert断言：</p>
-<pre class=" language-java"><code class="language-java">Assert<span class="token punctuation">.</span><span class="token function">notEmpty</span><span class="token punctuation">(</span>configurations<span class="token punctuation">,</span> <span class="token string">"No auto configuration classes found in META-INF/spring.factories. If you "</span>
-                <span class="token operator">+</span> <span class="token string">"are using a custom packaging, make sure that file is correct."</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>这句话指向了一个文件：</p>
-<pre><code>META-INF/spring.factories</code></pre>
-<p>这个是自动配置的核心文件。</p>
-<h5 id="META-INF-spring-factories"><a href="#META-INF-spring-factories" class="headerlink" title="META-INF/spring.factories"></a>META-INF/spring.factories</h5><p>在外部库的spring-boot-autoconfigure-2.5.3.jar包里可以找到这个文件：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTeHYT"><img src="https://z3.ax1x.com/2021/07/28/WTeHYT.png" alt="WTeHYT.png"></a></p>
-<p>文件的内容如下，这里面有很多形如XXXAutoConfiguration的文件：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTebfU"><img src="https://z3.ax1x.com/2021/07/28/WTebfU.png" alt="WTebfU.png"></a></p>
-<p>可以看到存在一个 ”# Auto Configure“的标记，这下面的内容都是自动配置的东西</p>
-<p>，如果内容不在这里面就得手动配置。虽然这里有很多配置类进行自动配置，但是是需要满足各个配置类上的所有@ConditionalOnXXX的条件，才会真正地配置（在表现中就是导入对应的starter），否则不会自动配置。</p>
-<p>随便点开一个看一下：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTm5ge"><img src="https://z3.ax1x.com/2021/07/28/WTm5ge.png" alt="WTm5ge.png"></a></p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTmIjH"><img src="https://z3.ax1x.com/2021/07/28/WTmIjH.png" alt="WTmIjH.png"></a></p>
-<p>存在多个ConditionalOn的注解，这些注解的作用是：满足指定条件的时候才将某个 bean 加载到应用上下文中。</p>
-<p>从@Configuration注解可以看出这也是一个Spring的配置类组件，这里面有一个内部类导入了WebMvcProperties：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTnzi6"><img src="https://z3.ax1x.com/2021/07/28/WTnzi6.png" alt="WTnzi6.png"></a></p>
-<p>点进WebMvcProperties可以看到里面创建了Servlet和View：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTnjd1"><img src="https://z3.ax1x.com/2021/07/28/WTnjd1.png" alt="WTnjd1.png"></a></p>
-<h5 id="loadFactoryNames"><a href="#loadFactoryNames" class="headerlink" title="loadFactoryNames"></a>loadFactoryNames</h5><p>重新回到getCandidateConfigurations方法，点进loadFactoryNames方法，这个方法获取了所有的加载配置：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTKxgO"><img src="https://z3.ax1x.com/2021/07/28/WTKxgO.png" alt="WTKxgO.png"></a></p>
-<p>loadFactoryNames方法里面有一个loadSpringFactories方法，点进去：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTKzvD"><img src="https://z3.ax1x.com/2021/07/28/WTKzvD.png" alt="WTKzvD.png"></a></p>
-<p>loadSpringFactories方法内容如下：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WTKv8K"><img src="https://z3.ax1x.com/2021/07/28/WTKv8K.png" alt="WTKv8K.png"></a></p>
-<p>从代码可以看到，这里存在一个从类加载器里获取资源作url枚举，然后遍历枚举url的操作，最后在遍历里面加载出了properties。而这个获取资源的常量FACTORIES_RESOURCE_LOCATION，其实就指向META-INF/spring.factories：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WT3eFs"><img src="https://z3.ax1x.com/2021/07/28/WT3eFs.md.png" alt="WT3eFs.md.png"></a></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>自动配置实际上就是配置spring-boot-autoconfigure-2.5.3.jar包里META-INF/spring.factories内设定的一些配置类，它会把所有需要导入的组件（满足文件上所有@ConditionalOnXXX条件的XXXAutoConfiguration的文件），以类名的方式返回，这些组件就会被添加到容器。有了自动配置功能，免去了我们手动编写配置文件的工作。</p>
+    //自定义一个视图解析器
+    //实现了视图解析器接口ViewResolver的类，就可以看做视图解析器
+    public static class MyViewResolver implements ViewResolver&amp;#123;
+        @Override
+        public View resolveViewName(String s, Locale locale) throws Exception &amp;#123;
+            return null;
+        &amp;#125;
+    &amp;#125;
+&amp;#125;</code></pre>
+<p> 也可以如下写法，对url跳转对应的html视图：</p>
+<pre><code>@Configuration
+public class MyMvcConfig implements WebMvcConfigurer &amp;#123;
+
+    //视图跳转
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) &amp;#123;
+        registry.addViewController("/hello").setViewName("test");
+    &amp;#125;
+&amp;#125;</code></pre>
+<p>注意：上面这个方法如果提示了 Cannot resolve MVC View ‘test’ ，说明缺少了thymeleaf的依赖，应在pom.xml内的依赖里补充如下内容：</p>
+<pre><code> &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;
+        &lt;/dependency&gt;</code></pre>
+<p>回到开头，自定义MVC配置要求配置类上面不标注@EnableWebMvc注解，这是什么原因呢？可以点进这个注解看一下。</p>
+<pre><code>@Retention(RetentionPolicy.RUNTIME)
+@Target(&amp;#123;ElementType.TYPE&amp;#125;)
+@Documented
+@Import(&amp;#123;DelegatingWebMvcConfiguration.class&amp;#125;)
+public @interface EnableWebMvc &amp;#123;
+&amp;#125;</code></pre>
+<p>可以看到这个注解引入了一个DelegatingWebMvcConfiguration类：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/frkuWV"><img src="https://z3.ax1x.com/2021/08/13/frkuWV.md.png" alt="frkuWV.md.png"></a></p>
+<p>从这里可以看出这个类继承了WebMvcConfigurationSupport，它的作用是从容器中获取所有的WebMvcConfigurer。</p>
+<p>回到MVC的自动配置类WebMvcAutoConfiguration：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/frZEcV"><img src="https://z3.ax1x.com/2021/08/13/frZEcV.md.png" alt="frZEcV.md.png"></a></p>
+<p>可以看出上面有一个注解：@ConditionalOnMissingBean(WebMvcConfigurationSupport.class)</p>
+<p>意思是容器里没有WebMvcConfigurationSupport这个类，MVC自动配置才生效，而DelegatingWebMvcConfiguration类继承了WebMvcConfigurationSupport，@EnableWebMvc又引入了DelegatingWebMvcConfiguration类。</p>
+<p>这就是为什么自定义的MVC配置类，不允许加@EnableWebMvc注解。</p>
+<h2 id="异步任务"><a href="#异步任务" class="headerlink" title="异步任务"></a>异步任务</h2><p>使用异步任务，只需要在SpringBoot的启动类上加上@EnableAsync，在需要异步处理的方法上标注@Async注解即可。</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/fOrydA"><img src="https://z3.ax1x.com/2021/08/20/fOrydA.png" alt="fOrydA.png"></a><br><a target="_blank" rel="noopener" href="https://imgtu.com/i/fOrsZd"><img src="https://z3.ax1x.com/2021/08/20/fOrsZd.png" alt="fOrsZd.png"></a></p>
+<h2 id="邮件发送"><a href="#邮件发送" class="headerlink" title="邮件发送"></a>邮件发送</h2><p>首先需要引入邮件发送相关的依赖：</p>
+<pre class=" language-xml"><code class="language-xml">        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-mail<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></code></pre>
+<p>在配置文件内填写相关的配置信息：<br><a target="_blank" rel="noopener" href="https://imgtu.com/i/fO22Js"><img src="https://z3.ax1x.com/2021/08/20/fO22Js.png" alt="fO22Js.png"></a></p>
+<p>编写测试方法，即可成功发送邮件：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/fO2RWn"><img src="https://z3.ax1x.com/2021/08/20/fO2RWn.png" alt="fO2RWn.png"></a></p>
+<p>发送后效果如图：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/fORZOf"><img src="https://z3.ax1x.com/2021/08/20/fORZOf.png" alt="fORZOf.png"></a></p>
+<p>还可以修改文字颜色及添加附件等进阶用法：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/fOTlQJ"><img src="https://z3.ax1x.com/2021/08/20/fOTlQJ.md.png" alt="fOTlQJ.md.png"></a></p>
+<p>其中MimeMessageHelper的第二个参数传true可以允许传多个附件，setText方法第二个参数传true可以适配前面text中的html语法</p>
+<h2 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h2><p>主要用到两个接口：TaskScheduler和TaskExecutor，同时需要在启动类上添加@EnableScheduling开启定时功能的注解。相关的内容还有：@Scheduled(注解标明什么时候执行)，Cron表达式</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/h9QmSe"><img src="https://z3.ax1x.com/2021/08/23/h9QmSe.png" alt="h9QmSe.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/h9QZWD"><img src="https://z3.ax1x.com/2021/08/23/h9QZWD.png" alt="h9QZWD.png"></a></p>
+<p>Cron表达式可以通过自动生成器等生成条件，也可以自行编写</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -587,7 +661,7 @@ public class SpringbootStudyApplication &#123;
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://lancewu98.github.io/2021/07/28/springboot-zi-dong-zhuang-pei-yuan-li/">https://lancewu98.github.io/2021/07/28/springboot-zi-dong-zhuang-pei-yuan-li/</a>
+                    <a href="https://lancewu98.github.io/2021/08/25/springboot-ru-men/">https://lancewu98.github.io/2021/08/25/springboot-ru-men/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -794,9 +868,10 @@ public class SpringbootStudyApplication &#123;
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/08/25/springboot-ru-men/">
                     <div class="card-image">
@@ -817,9 +892,9 @@ public class SpringbootStudyApplication &#123;
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-25
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-25
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -828,6 +903,7 @@ public class SpringbootStudyApplication &#123;
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -846,24 +922,28 @@ public class SpringbootStudyApplication &#123;
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/27/mybatis-pian-qi-er-jin-jie-yong-fa/">
+                <a href="/2021/07/28/springboot-zi-dong-zhuang-pei-yuan-li/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="MyBatis入门（续）">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="SpringBoot 自动装配原理">
                         
-                        <span class="card-title">MyBatis入门（续）</span>
+                        <span class="card-title">SpringBoot 自动装配原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            MyBatis篇其二 ——进阶用法1.多对一映射在mybatis的实际使用情景下，每个查询实体不一定只是八大基础类型，可能存在复杂的对象类型，这个时候就不能直接按照之前的写法处理。首先看一下多对一的情况，创建一个Student类和一个Tea
+                            SpringBoot 自动装配原理主程序：
+@SpringBootApplication
+public class SpringbootStudyApplication &#123;
+
+    public static void main
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-28
                             </span>
                         <span class="publish-author">
                             
@@ -876,8 +956,8 @@ public class SpringbootStudyApplication &#123;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MyBatis/">
-                        <span class="chip bg-color">MyBatis</span>
+                    <a href="/tags/SpringBoot/">
+                        <span class="chip bg-color">SpringBoot</span>
                     </a>
                     
                 </div>
